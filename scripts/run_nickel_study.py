@@ -11,7 +11,9 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-NI_MASSES = [0.00, 0.01, 0.03, 0.05, 0.10, 0.15]
+# Low/mid/high set: enough to show the nickel-powered tail changing
+# without spending a full day on a dense grid.
+NI_MASSES = [0.00, 0.05, 0.15]
 RUN_PREFIX = "ni"
 
 
@@ -43,7 +45,9 @@ def patch_parameters(template: str, ni_mass: float, outdir: str) -> str:
     ni_str = f"{ni_mass:.2f}".rstrip("0").rstrip(".")
     if "." not in ni_str:
         ni_str += ".0"
-    ni_line = f"Ni_mass = {ni_str}\t\t\t#(in solar mass)"
+    # SNEC's Fortran parser does not reliably strip literal tab characters
+    # before fixed-format floating point reads.
+    ni_line = f"Ni_mass = {ni_str} #(in solar mass)"
 
     if re.search(r"^Ni_mass\s*=", text, re.MULTILINE):
         text = re.sub(r"^Ni_mass\s*=.*$", ni_line, text, count=1, flags=re.MULTILINE)

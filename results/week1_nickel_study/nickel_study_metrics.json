@@ -1,0 +1,32 @@
+[
+  {
+    "ni_mass": 0.0,
+    "run_id": "ni_000",
+    "peak_luminosity_Lsun": 302484125887.944,
+    "peak_time_days": 1.987284809375,
+    "plateau_duration_days": 30.104224537037034,
+    "luminosity_100d_Lsun": 28530438.213989988,
+    "luminosity_150d_Lsun": 2559406.3091650447,
+    "luminosity_200d_Lsun": 254759.362056028
+  },
+  {
+    "ni_mass": 0.05,
+    "run_id": "ni_050",
+    "peak_luminosity_Lsun": 254962974162.08105,
+    "peak_time_days": 1.9872834510416666,
+    "plateau_duration_days": 30.989351851851858,
+    "luminosity_100d_Lsun": 151522056.25212866,
+    "luminosity_150d_Lsun": 58953444.65132353,
+    "luminosity_200d_Lsun": 34689345.4152076
+  },
+  {
+    "ni_mass": 0.15,
+    "run_id": "ni_150",
+    "peak_luminosity_Lsun": 239789969079.53973,
+    "peak_time_days": 1.987290541898148,
+    "plateau_duration_days": 34.43310185185186,
+    "luminosity_100d_Lsun": 455236054.5809919,
+    "luminosity_150d_Lsun": 173923854.00250128,
+    "luminosity_200d_Lsun": 103907249.14707354
+  }
+]

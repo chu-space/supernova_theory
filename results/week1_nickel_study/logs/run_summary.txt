@@ -1,0 +1,6 @@
+Week 1 Nickel Study — 2026-06-09T15:49:22.816929
+Template: /Users/arifchu/Desktop/GitHub/supernova_theory/snec/parameters
+
+[OK] ni_000 Ni_mass=0.0 — 2797 s — log: /Users/arifchu/Desktop/GitHub/supernova_theory/results/week1_nickel_study/logs/ni_000.log
+[OK] ni_050 Ni_mass=0.05 — 5233 s — log: /Users/arifchu/Desktop/GitHub/supernova_theory/results/week1_nickel_study/logs/ni_050.log
+[OK] ni_150 Ni_mass=0.15 — 5243 s — log: /Users/arifchu/Desktop/GitHub/supernova_theory/results/week1_nickel_study/logs/ni_150.log

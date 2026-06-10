@@ -1,0 +1,26 @@
+Started: 2026-06-09T15:10:14.301675
+Command: ./snec (cwd=/Users/arifchu/Desktop/GitHub/supernova_theory/snec/runs/week1_nickel_study/ni_100)
+
+At line 222 of file input_parser.F90
+Fortran runtime error: Bad value during floating point read
+
+Error termination. Backtrace:
+#0  0x102efed2f
+#1  0x102eff8d7
+#2  0x102f001a7
+#3  0x102ff0a1b
+#4  0x102ff4223
+#5  0x102ff54f3
+#6  0x1028db927
+#7  0x1028dbd6b
+#8  0x1028ede83
+#9  0x1028ee21f
+
+ ***********************************
+ * Supernova Explosion Code (SNEC) *
+ ***********************************
+
+
+Finished: 2026-06-09T15:10:14.312875
+Exit code: 2
+Elapsed: 0.0 s

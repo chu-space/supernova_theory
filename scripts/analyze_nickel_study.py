@@ -13,8 +13,8 @@ import pandas as pd
 SEC_PER_DAY = 86400.0
 L_SUN = 3.998e33
 
-# Match run_nickel_study.py
-NI_MASSES = [0.00, 0.01, 0.03, 0.05, 0.10, 0.15]
+# Match run_nickel_study.py: low/mid/high nickel masses.
+NI_MASSES = [0.00, 0.05, 0.15]
 
 
 def repo_root() -> Path:
@@ -97,18 +97,49 @@ def plot_overlaid_lightcurves(
     runs: list[tuple[float, np.ndarray, np.ndarray]],
     output_path: Path,
 ) -> None:
-    fig, ax = plt.subplots(figsize=(9, 5.5))
+    fig, (ax1, ax2, ax3) = plt.subplots(
+        3, 1,
+        figsize=(9, 11),
+        constrained_layout=True,
+    )
     cmap = plt.cm.viridis(np.linspace(0.1, 0.9, len(runs)))
+
     for (ni_mass, t, l), color in zip(runs, cmap):
-        ax.plot(t, l, label=rf"$M_{{\mathrm{{Ni}}}} = {ni_mass:.2f}\,M_\odot$", color=color)
-    ax.set_xlabel("Time since explosion (days)")
-    ax.set_ylabel(r"Bolometric luminosity ($L_\odot$)")
-    ax.set_title("Week 1: Light Curves vs ⁵⁶Ni Mass (15 M☉ RSG)")
-    ax.set_xlim(0, 220)
-    ax.set_ylim(bottom=0)
-    ax.legend(loc="upper right", framealpha=0.9)
-    ax.grid(True, alpha=0.3)
-    fig.tight_layout()
+        label = rf"$M_{{\mathrm{{Ni}}}} = {ni_mass:.2f}\,M_\odot$"
+
+        ax1.plot(t, l, label=label, color=color, linewidth=1.5)
+
+        early = t <= 10.0
+        ax2.plot(t[early], l[early], label=label, color=color, linewidth=1.5)
+
+        plateau_tail = t >= 10.0
+        ax3.plot(t[plateau_tail], l[plateau_tail], label=label, color=color, linewidth=1.5)
+
+    # Full curve: log scale keeps the shock-breakout flash from flattening the tail.
+    ax1.set_yscale("log")
+    ax1.set_xlim(0, 220)
+    ax1.set_xlabel("Time since explosion (days)")
+    ax1.set_ylabel(r"Luminosity ($L_\odot$)")
+    ax1.set_title("Week 1: Light Curves vs Ni Mass (15 Msol RSG)")
+    ax1.grid(True, which="both", alpha=0.3)
+    ax1.legend(loc="upper right", framealpha=0.9)
+
+    # Early-time panel: isolates the shock-breakout flash and cooling-envelope phase.
+    ax2.set_yscale("log")
+    ax2.set_xlim(0, 10)
+    ax2.set_xlabel("Time since explosion (days)")
+    ax2.set_ylabel(r"Luminosity ($L_\odot$)")
+    ax2.set_title("Early-Time Evolution (0-10 days)")
+    ax2.grid(True, which="both", alpha=0.3)
+
+    # Plateau/tail panel: removes the breakout spike entirely so nickel effects are visible.
+    ax3.set_yscale("log")
+    ax3.set_xlim(10, 220)
+    ax3.set_xlabel("Time since explosion (days)")
+    ax3.set_ylabel(r"Luminosity ($L_\odot$)")
+    ax3.set_title("Plateau and Radioactive Tail (10-220 days)")
+    ax3.grid(True, which="both", alpha=0.3)
+
     fig.savefig(output_path)
     plt.close(fig)
 
