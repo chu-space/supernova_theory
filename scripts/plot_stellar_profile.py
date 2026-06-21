@@ -201,6 +201,43 @@ def plot_composition(profiles: list[StellarProfile], output_path: Path) -> None:
     plt.close(fig)
 
 
+def plot_endpoint_mass_radius(profiles: list[StellarProfile], output_path: Path) -> None:
+    fig, ax = plt.subplots(figsize=(8, 5.5), constrained_layout=True)
+    colors = plt.cm.Set2(np.linspace(0.1, 0.9, len(profiles)))
+
+    for profile, color in zip(profiles, colors):
+        final_mass = profile.mass_msun[-1]
+        surface_radius = profile.radius_rsun[-1]
+        ax.scatter(
+            final_mass,
+            surface_radius,
+            s=95,
+            color=color,
+            edgecolor="black",
+            linewidth=0.7,
+            zorder=3,
+            label=profile.name,
+        )
+        ax.annotate(
+            profile.name,
+            xy=(final_mass, surface_radius),
+            xytext=(6, 6),
+            textcoords="offset points",
+            fontsize=9,
+        )
+
+    ax.set_title("Evolutionary Endpoints: Final Mass vs Surface Radius")
+    ax.set_xlabel(r"Final mass ($M_\odot$)")
+    ax.set_ylabel(r"Surface radius ($R_\odot$)")
+    ax.set_yscale("log")
+    ax.grid(True, which="both", alpha=0.3)
+    ax.legend(loc="lower right", framealpha=0.9)
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(output_path)
+    plt.close(fig)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -234,9 +271,14 @@ def main() -> None:
 
     plot_structure(profiles, args.output_dir / "stellar_structure_compare.png")
     plot_composition(profiles, args.output_dir / "stellar_composition_profiles.png")
+    plot_endpoint_mass_radius(profiles, args.output_dir / "evolutionary_endpoints_mass_radius.png")
 
     print(f"Saved stellar structure plot to {args.output_dir / 'stellar_structure_compare.png'}")
     print(f"Saved composition plot to {args.output_dir / 'stellar_composition_profiles.png'}")
+    print(
+        "Saved endpoint plot to "
+        f"{args.output_dir / 'evolutionary_endpoints_mass_radius.png'}"
+    )
     for profile in profiles:
         print(
             f"{profile.name}: final mass={profile.mass_msun[-1]:.2f} Msol, "
