@@ -182,6 +182,43 @@ def run_specs(root: Path) -> tuple[list[RunSpec], list[RunSpec]]:
     return completed, partial
 
 
+def sce_specs(root: Path) -> list[RunSpec]:
+    return [
+        RunSpec(
+            "stripped_sce_e1_ni050",
+            "Stripped SCE rerun",
+            "Stripped",
+            1.0,
+            root / "snec" / "runs" / "model_variants" / "stripped_sce_e1_ni050" / "Data",
+            complete=False,
+        ),
+        RunSpec(
+            "avishai_wn3_sce_e1_ni050",
+            "Avishai WN3 SCE",
+            "Avishai WN3",
+            1.0,
+            root / "snec" / "runs" / "model_variants" / "avishai_wn3_sce_e1_ni050" / "Data",
+            complete=False,
+        ),
+        RunSpec(
+            "avishai_bsg2_sce_e1_ni050",
+            "Avishai BSG2 SCE",
+            "Avishai BSG2",
+            1.0,
+            root / "snec" / "runs" / "model_variants" / "avishai_bsg2_sce_e1_ni050" / "Data",
+            complete=False,
+        ),
+        RunSpec(
+            "avishai_bsg3_sce_e1_ni050",
+            "Avishai BSG3 SCE",
+            "Avishai BSG3",
+            1.0,
+            root / "snec" / "runs" / "model_variants" / "avishai_bsg3_sce_e1_ni050" / "Data",
+            complete=False,
+        ),
+    ]
+
+
 def validate_specs(specs: list[RunSpec]) -> list[RunSpec]:
     available = []
     for spec in specs:
@@ -330,6 +367,94 @@ def plot_partial_low_energy(specs: list[RunSpec], output_path: Path) -> None:
     plt.close(fig)
 
 
+def plot_sce_zoom(specs: list[RunSpec], output_path: Path) -> None:
+    fig, axes = plt.subplots(3, 1, figsize=(9, 11), constrained_layout=True)
+    ax_hours, ax_stripped, ax_two_days = axes
+    colors = {
+        ("RSG", 0.5): "C4",
+        ("RSG", 1.0): "C0",
+        ("RSG", 2.0): "C1",
+        ("Stripped", 0.5): "C5",
+        ("Stripped", 1.0): "C2",
+        ("Stripped", 2.0): "C3",
+        ("Avishai WN3", 1.0): "C6",
+        ("Avishai BSG2", 1.0): "C7",
+        ("Avishai BSG3", 1.0): "C8",
+    }
+    styles = {
+        "RSG": "-",
+        "Stripped": "--",
+        "Avishai WN3": "-.",
+        "Avishai BSG2": ":",
+        "Avishai BSG3": ":",
+    }
+
+    for spec in specs:
+        time_days, lum_lsun = positive(*load_lightcurve(spec.data_dir))
+        time_hours = time_days * 24.0
+        color = colors.get((spec.profile, spec.energy_foe), None)
+        style = styles.get(spec.profile, "-")
+        alpha = 1.0 if spec.complete else 0.65
+        label = spec.label
+
+        early_12h = time_hours <= 12.0
+        early_2d = time_hours <= 48.0
+        ax_hours.plot(
+            time_hours[early_12h],
+            lum_lsun[early_12h],
+            style,
+            color=color,
+            alpha=alpha,
+            linewidth=1.5,
+            label=label,
+        )
+        ax_two_days.plot(
+            time_hours[early_2d],
+            lum_lsun[early_2d],
+            style,
+            color=color,
+            alpha=alpha,
+            linewidth=1.5,
+            label=label,
+        )
+
+        if spec.profile == "Stripped" or "WN" in spec.profile:
+            ax_stripped.plot(
+                time_hours[early_12h],
+                lum_lsun[early_12h],
+                style,
+                color=color,
+                alpha=alpha,
+                linewidth=1.8,
+                label=label,
+            )
+
+    ax_hours.set_title("SCE Zoom: First 12 Hours")
+    ax_hours.set_xlim(0, 12)
+    ax_hours.set_yscale("log")
+    ax_hours.set_ylabel(r"Luminosity ($L_\odot$)")
+    ax_hours.grid(True, which="both", alpha=0.3)
+    ax_hours.legend(loc="best", framealpha=0.9)
+
+    ax_stripped.set_title("SCE Zoom: Stripped/WN Models Only")
+    ax_stripped.set_xlim(0, 12)
+    ax_stripped.set_yscale("log")
+    ax_stripped.set_ylabel(r"Luminosity ($L_\odot$)")
+    ax_stripped.grid(True, which="both", alpha=0.3)
+    ax_stripped.legend(loc="best", framealpha=0.9)
+
+    ax_two_days.set_title("SCE and Breakout Context: First 48 Hours")
+    ax_two_days.set_xlim(0, 48)
+    ax_two_days.set_yscale("log")
+    ax_two_days.set_xlabel("Time since explosion (hours)")
+    ax_two_days.set_ylabel(r"Luminosity ($L_\odot$)")
+    ax_two_days.grid(True, which="both", alpha=0.3)
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(output_path)
+    plt.close(fig)
+
+
 def metric_record(spec: RunSpec) -> dict[str, float | str | bool]:
     time_days, lum_lsun = positive(*load_lightcurve(spec.data_dir))
     peak_idx = int(np.argmax(lum_lsun))
@@ -381,6 +506,7 @@ def main() -> None:
     completed_specs, partial_specs = run_specs(root)
     completed_specs = validate_specs(completed_specs)
     partial_specs = validate_specs(partial_specs)
+    high_cadence_sce_specs = validate_specs(sce_specs(root))
 
     if not completed_specs:
         raise FileNotFoundError("No completed model-variant runs found.")
@@ -391,6 +517,10 @@ def main() -> None:
 
     plot_lightcurves(completed_specs, output_dir / "lightcurves_energy_progenitor.png")
     plot_diagnostics(completed_specs, output_dir / "diagnostics_energy_progenitor.png")
+    plot_sce_zoom(
+        completed_specs + partial_specs + high_cadence_sce_specs,
+        output_dir / "sce_zoom_initial_models.png",
+    )
     if partial_specs:
         plot_partial_low_energy(partial_specs, output_dir / "partial_low_energy_progress.png")
 

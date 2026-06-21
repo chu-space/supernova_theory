@@ -13,7 +13,25 @@ from pathlib import Path
 PROFILE_PRESETS = {
     "rsg": ("profiles/15Msol_RSG.short", "profiles/15Msol_RSG.iso.dat"),
     "stripped": ("profiles/stripped_star.short", "profiles/stripped_star.iso.dat"),
+    "avishai_bsg2": (
+        "avishai_models/MW-M15M8.25P367-primary-BSG2.short",
+        "avishai_models/MW-M15M8.25P367-primary-BSG2.iso.dat",
+    ),
+    "avishai_bsg3": (
+        "avishai_models/MW-M22M5.5P367-primary-BSG3.short",
+        "avishai_models/MW-M22M5.5P367-primary-BSG3.iso.dat",
+    ),
+    "avishai_wn3": (
+        "avishai_models/MW-M25M13.75P4-primary-WN3.short",
+        "avishai_models/MW-M25M13.75P4-primary-WN3.iso.dat",
+    ),
 }
+
+SCE_TEND_DAYS = 10.0
+SCE_DTOUT_SECONDS = 300.0
+SCE_DTOUT_SCALAR_SECONDS = 60.0
+SCE_DTOUT_CHECK_SECONDS = 300.0
+SCE_DTMAX_SECONDS = 10.0
 
 
 def repo_root() -> Path:
@@ -56,6 +74,11 @@ def patch_parameters(
     energy_foe: float,
     ni_mass: float,
     outdir: str,
+    tend_seconds: float | None = None,
+    dtout_seconds: float | None = None,
+    dtout_scalar_seconds: float | None = None,
+    dtout_check_seconds: float | None = None,
+    dtmax_seconds: float | None = None,
 ) -> str:
     profile_name, comp_profile_name = PROFILE_PRESETS[profile]
     text = template
@@ -68,6 +91,18 @@ def patch_parameters(
     ni_switch = 0 if ni_mass == 0.0 else 1
     text = patch_line(text, "Ni_switch", str(ni_switch))
     text = patch_line(text, "Ni_mass", f"{format_float_for_snec(ni_mass)} #(in solar mass)")
+
+    if tend_seconds is not None:
+        text = patch_line(text, "tend", format_float_for_snec(tend_seconds))
+    if dtout_seconds is not None:
+        text = patch_line(text, "dtout", format_float_for_snec(dtout_seconds))
+    if dtout_scalar_seconds is not None:
+        text = patch_line(text, "dtout_scalar", format_float_for_snec(dtout_scalar_seconds))
+    if dtout_check_seconds is not None:
+        text = patch_line(text, "dtout_check", format_float_for_snec(dtout_check_seconds))
+    if dtmax_seconds is not None:
+        text = patch_line(text, "dtmax", format_float_for_snec(dtmax_seconds))
+
     return text
 
 
@@ -82,8 +117,10 @@ def setup_run_directory(
         shutil.rmtree(run_dir)
     run_dir.mkdir(parents=True)
 
-    for name in ("snec", "profiles", "tables"):
+    for name in ("snec", "profiles", "tables", "avishai_models"):
         target = snec_dir / name
+        if name == "avishai_models":
+            target = snec_dir.parent / name
         if target.exists():
             (run_dir / name).symlink_to(target.resolve())
 
@@ -137,6 +174,40 @@ def main() -> None:
         help="Run directory name. Defaults to profile/energy/Ni tag.",
     )
     parser.add_argument(
+        "--early-sce",
+        action="store_true",
+        help=(
+            "Use high-cadence early-time output for shock-cooling emission: "
+            f"tend={SCE_TEND_DAYS:g} d, dtout_scalar={SCE_DTOUT_SCALAR_SECONDS:g} s, "
+            f"dtmax={SCE_DTMAX_SECONDS:g} s."
+        ),
+    )
+    parser.add_argument(
+        "--tend-days",
+        type=float,
+        help="Override total run duration in days",
+    )
+    parser.add_argument(
+        "--dtout-s",
+        type=float,
+        help="Override full profile output cadence in seconds",
+    )
+    parser.add_argument(
+        "--dtout-scalar-s",
+        type=float,
+        help="Override scalar output cadence in seconds",
+    )
+    parser.add_argument(
+        "--dtout-check-s",
+        type=float,
+        help="Override check-output cadence in seconds",
+    )
+    parser.add_argument(
+        "--dtmax-s",
+        type=float,
+        help="Override maximum internal hydrodynamic timestep in seconds",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Write parameters only; do not execute SNEC",
@@ -161,12 +232,32 @@ def main() -> None:
     logs_root.mkdir(parents=True, exist_ok=True)
 
     template = (snec_dir / "parameters").read_text()
+    tend_days = args.tend_days
+    dtout_s = args.dtout_s
+    dtout_scalar_s = args.dtout_scalar_s
+    dtout_check_s = args.dtout_check_s
+    dtmax_s = args.dtmax_s
+
+    if args.early_sce:
+        tend_days = SCE_TEND_DAYS if tend_days is None else tend_days
+        dtout_s = SCE_DTOUT_SECONDS if dtout_s is None else dtout_s
+        dtout_scalar_s = (
+            SCE_DTOUT_SCALAR_SECONDS if dtout_scalar_s is None else dtout_scalar_s
+        )
+        dtout_check_s = SCE_DTOUT_CHECK_SECONDS if dtout_check_s is None else dtout_check_s
+        dtmax_s = SCE_DTMAX_SECONDS if dtmax_s is None else dtmax_s
+
     params_content = patch_parameters(
         template,
         profile=args.profile,
         energy_foe=args.energy_foe,
         ni_mass=args.ni_mass,
         outdir="Data",
+        tend_seconds=None if tend_days is None else tend_days * 86400.0,
+        dtout_seconds=dtout_s,
+        dtout_scalar_seconds=dtout_scalar_s,
+        dtout_check_seconds=dtout_check_s,
+        dtmax_seconds=dtmax_s,
     )
 
     lc_path = runs_root / run_id / "Data" / "lum_observed.dat"

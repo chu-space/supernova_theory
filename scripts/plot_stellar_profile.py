@@ -14,8 +14,27 @@ M_SUN = 1.98847e33
 R_SUN = 6.957e10
 
 PROFILE_PRESETS = {
-    "rsg": ("15 Msol RSG", "15Msol_RSG.short", "15Msol_RSG.iso.dat"),
-    "stripped": ("Stripped model", "stripped_star.short", "stripped_star.iso.dat"),
+    "rsg": ("15 Msol RSG", "snec/profiles/15Msol_RSG.short", "snec/profiles/15Msol_RSG.iso.dat"),
+    "stripped": (
+        "Practice stripped model",
+        "snec/profiles/stripped_star.short",
+        "snec/profiles/stripped_star.iso.dat",
+    ),
+    "avishai_bsg2": (
+        "Avishai BSG2",
+        "avishai_models/MW-M15M8.25P367-primary-BSG2.short",
+        "avishai_models/MW-M15M8.25P367-primary-BSG2.iso.dat",
+    ),
+    "avishai_bsg3": (
+        "Avishai BSG3",
+        "avishai_models/MW-M22M5.5P367-primary-BSG3.short",
+        "avishai_models/MW-M22M5.5P367-primary-BSG3.iso.dat",
+    ),
+    "avishai_wn3": (
+        "Avishai WN3",
+        "avishai_models/MW-M25M13.75P4-primary-WN3.short",
+        "avishai_models/MW-M25M13.75P4-primary-WN3.iso.dat",
+    ),
 }
 
 SELECTED_ISOTOPES = [
@@ -200,16 +219,16 @@ def main() -> None:
     args = parser.parse_args()
 
     setup_plot_style()
-    profiles_dir = repo_root() / "snec" / "profiles"
+    root = repo_root()
     profiles = []
 
     for preset in args.profiles:
-        label, short_name, iso_name = PROFILE_PRESETS[preset]
+        label, short_rel, iso_rel = PROFILE_PRESETS[preset]
         profiles.append(
             load_profile(
                 label,
-                profiles_dir / short_name,
-                profiles_dir / iso_name,
+                root / short_rel,
+                root / iso_rel,
             )
         )
 
