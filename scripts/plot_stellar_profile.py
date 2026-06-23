@@ -35,6 +35,16 @@ PROFILE_PRESETS = {
         "avishai_models/MW-M25M13.75P4-primary-WN3.short",
         "avishai_models/MW-M25M13.75P4-primary-WN3.iso.dat",
     ),
+    "avishai_wn3_ext_m0p01_r5": (
+        "WN3 + 0.01 Msol to 5 Rsun",
+        "snec/profiles/generated/avishai_wn3_ext_m0p01_r5.short",
+        "snec/profiles/generated/avishai_wn3_ext_m0p01_r5.iso.dat",
+    ),
+    "avishai_wn3_ext_m0p01_r50": (
+        "WN3 + 0.01 Msol to 50 Rsun",
+        "snec/profiles/generated/avishai_wn3_ext_m0p01_r50.short",
+        "snec/profiles/generated/avishai_wn3_ext_m0p01_r50.iso.dat",
+    ),
 }
 
 SELECTED_ISOTOPES = [

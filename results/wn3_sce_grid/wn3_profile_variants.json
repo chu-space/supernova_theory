@@ -1,0 +1,32 @@
+[
+  {
+    "key": "bare",
+    "label": "Bare Avishai WN3",
+    "profile": "avishai_wn3",
+    "role": "baseline",
+    "added_mass_msun": 0.0,
+    "outer_radius_rsun": "",
+    "final_mass_msun": 7.78236533616298,
+    "final_radius_rsun": 0.5518737961765129
+  },
+  {
+    "key": "mass_m0p01_r5",
+    "label": "WN3 + 0.01 Msol to 5 Rsun",
+    "profile": "avishai_wn3_ext_m0p01_r5",
+    "role": "mass_variant",
+    "added_mass_msun": 0.01,
+    "outer_radius_rsun": 5.0,
+    "final_mass_msun": 7.792365336162979,
+    "final_radius_rsun": 5.0
+  },
+  {
+    "key": "radius_m0p01_r50",
+    "label": "WN3 + 0.01 Msol to 50 Rsun",
+    "profile": "avishai_wn3_ext_m0p01_r50",
+    "role": "radius_variant",
+    "added_mass_msun": 0.01,
+    "outer_radius_rsun": 50.0,
+    "final_mass_msun": 7.792365336162979,
+    "final_radius_rsun": 50.0
+  }
+]

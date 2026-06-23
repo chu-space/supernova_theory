@@ -1,0 +1,4 @@
+key,label,profile,role,added_mass_msun,outer_radius_rsun,final_mass_msun,final_radius_rsun
+bare,Bare Avishai WN3,avishai_wn3,baseline,0.0,,7.78236533616298,0.5518737961765129
+mass_m0p01_r5,WN3 + 0.01 Msol to 5 Rsun,avishai_wn3_ext_m0p01_r5,mass_variant,0.01,5.0,7.792365336162979,5.0
+radius_m0p01_r50,WN3 + 0.01 Msol to 50 Rsun,avishai_wn3_ext_m0p01_r50,radius_variant,0.01,50.0,7.792365336162979,50.0

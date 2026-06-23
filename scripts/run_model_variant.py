@@ -25,6 +25,14 @@ PROFILE_PRESETS = {
         "avishai_models/MW-M25M13.75P4-primary-WN3.short",
         "avishai_models/MW-M25M13.75P4-primary-WN3.iso.dat",
     ),
+    "avishai_wn3_ext_m0p01_r5": (
+        "profiles/generated/avishai_wn3_ext_m0p01_r5.short",
+        "profiles/generated/avishai_wn3_ext_m0p01_r5.iso.dat",
+    ),
+    "avishai_wn3_ext_m0p01_r50": (
+        "profiles/generated/avishai_wn3_ext_m0p01_r50.short",
+        "profiles/generated/avishai_wn3_ext_m0p01_r50.iso.dat",
+    ),
 }
 
 SCE_TEND_DAYS = 10.0
@@ -149,6 +157,26 @@ def run_snec(run_dir: Path, log_path: Path) -> tuple[bool, float]:
     return result.returncode == 0, elapsed
 
 
+def lightcurve_reaches(lc_path: Path, tend_seconds: float | None) -> bool:
+    if not lc_path.exists():
+        return False
+    if tend_seconds is None:
+        return True
+
+    last_line = ""
+    for line in lc_path.read_text().splitlines():
+        if line.strip():
+            last_line = line
+    if not last_line:
+        return False
+
+    try:
+        last_time_seconds = float(last_line.split()[0].replace("D", "E").replace("d", "e"))
+    except (IndexError, ValueError):
+        return False
+    return last_time_seconds >= 0.999 * tend_seconds
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -261,15 +289,17 @@ def main() -> None:
     )
 
     lc_path = runs_root / run_id / "Data" / "lum_observed.dat"
-    if args.skip_existing and lc_path.exists():
-        print(f"[SKIP] {run_id}: output exists at {lc_path}")
+    if args.skip_existing and lightcurve_reaches(lc_path, None if tend_days is None else tend_days * 86400.0):
+        print(f"[SKIP] {run_id}: complete output exists at {lc_path}", flush=True)
         return
+    if args.skip_existing and lc_path.exists():
+        print(f"[RERUN] {run_id}: existing output is incomplete at {lc_path}", flush=True)
 
     if args.dry_run:
         run_dir = runs_root / run_id
         run_dir.mkdir(parents=True, exist_ok=True)
         (run_dir / "parameters").write_text(params_content)
-        print(f"[DRY] wrote parameters to {run_dir / 'parameters'}")
+        print(f"[DRY] wrote parameters to {run_dir / 'parameters'}", flush=True)
         return
 
     run_dir = setup_run_directory(snec_dir, runs_root, run_id, params_content)
@@ -277,11 +307,12 @@ def main() -> None:
 
     print(
         f"Running {run_id}: profile={args.profile}, "
-        f"energy={args.energy_foe:.2f} foe, Ni_mass={args.ni_mass:.3f} Msol"
+        f"energy={args.energy_foe:.2f} foe, Ni_mass={args.ni_mass:.3f} Msol",
+        flush=True,
     )
     ok, elapsed = run_snec(run_dir, log_path)
     status = "OK" if ok else "FAIL"
-    print(f"[{status}] {run_id} - {elapsed:.0f} s - log: {log_path}")
+    print(f"[{status}] {run_id} - {elapsed:.0f} s - log: {log_path}", flush=True)
 
 
 if __name__ == "__main__":
