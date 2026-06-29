@@ -36,9 +36,11 @@ PROFILE_PRESETS = {
 }
 
 SCE_TEND_DAYS = 10.0
-SCE_DTOUT_SECONDS = 300.0
+# Full profile outputs create the large .xg files. Keep these sparse while
+# preserving high-cadence scalar light-curve outputs below.
+SCE_DTOUT_SECONDS = 21600.0
 SCE_DTOUT_SCALAR_SECONDS = 60.0
-SCE_DTOUT_CHECK_SECONDS = 300.0
+SCE_DTOUT_CHECK_SECONDS = 21600.0
 SCE_DTMAX_SECONDS = 10.0
 
 
@@ -206,8 +208,9 @@ def main() -> None:
         action="store_true",
         help=(
             "Use high-cadence early-time output for shock-cooling emission: "
-            f"tend={SCE_TEND_DAYS:g} d, dtout_scalar={SCE_DTOUT_SCALAR_SECONDS:g} s, "
-            f"dtmax={SCE_DTMAX_SECONDS:g} s."
+            f"tend={SCE_TEND_DAYS:g} d, dtout={SCE_DTOUT_SECONDS:g} s, "
+            f"dtout_scalar={SCE_DTOUT_SCALAR_SECONDS:g} s, "
+            f"dtout_check={SCE_DTOUT_CHECK_SECONDS:g} s, dtmax={SCE_DTMAX_SECONDS:g} s."
         ),
     )
     parser.add_argument(

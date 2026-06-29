@@ -193,11 +193,11 @@ def sce_specs(root: Path) -> list[RunSpec]:
             complete=False,
         ),
         RunSpec(
-            "avishai_wn3_sce_e1_ni050",
-            "Avishai WN3 SCE",
+            "wn3_sce_bare_e1_ni050",
+            "Bare Avishai WN3 SCE",
             "Avishai WN3",
             1.0,
-            root / "snec" / "runs" / "model_variants" / "avishai_wn3_sce_e1_ni050" / "Data",
+            root / "snec" / "runs" / "model_variants" / "wn3_sce_bare_e1_ni050" / "Data",
             complete=False,
         ),
         RunSpec(

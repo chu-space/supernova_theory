@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+
+# SNEC generated XGraph outputs
+snec/Data/*.xg
+snec/runs/**/Data/*.xg
+
+# SNEC generated run-directory symlinks
+snec/runs/**/snec
+snec/runs/**/profiles
+snec/runs/**/tables
+snec/runs/**/avishai_models
