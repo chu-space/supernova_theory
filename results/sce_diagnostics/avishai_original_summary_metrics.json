@@ -41,7 +41,7 @@
     "profile": "BSG2",
     "energy_foe": 1.0,
     "ni_mass_msun": 0.05,
-    "max_time_hours": 240.0,
+    "max_time_hours": 48.0,
     "peak_time_hours_0_48h": 1.7839173694444446,
     "peak_luminosity_Lsun_0_48h": 598559502126.063,
     "luminosity_0p25h_Lsun": 147310.18799684016,
@@ -65,9 +65,9 @@
     "luminosity_24p0h_Lsun": 1551787369.8036888,
     "teff_24p0h_K": 21535.36301578884,
     "rphoto_24p0h_Rsun": 2891.950305662809,
-    "luminosity_48p0h_Lsun": 65763761.57467374,
-    "teff_48p0h_K": 9250.921989883169,
-    "rphoto_48p0h_Rsun": 3202.9405449787687
+    "luminosity_48p0h_Lsun": 65755303.72936468,
+    "teff_48p0h_K": 9250.9208276,
+    "rphoto_48p0h_Rsun": 3202.938994969096
   },
   {
     "run_id": "avishai_bsg3_sce_e1_ni050",
@@ -76,7 +76,7 @@
     "profile": "BSG3",
     "energy_foe": 1.0,
     "ni_mass_msun": 0.05,
-    "max_time_hours": 117.16683286111112,
+    "max_time_hours": 48.0,
     "peak_time_hours_0_48h": 0.23342783213333332,
     "peak_luminosity_Lsun_0_48h": 19923070905.45273,
     "luminosity_0p25h_Lsun": 599690530.0387154,
@@ -100,8 +100,8 @@
     "luminosity_24p0h_Lsun": 108192253.4939207,
     "teff_24p0h_K": 12596.42154880829,
     "rphoto_24p0h_Rsun": 2231.9851375878998,
-    "luminosity_48p0h_Lsun": 86162233.68541065,
-    "teff_48p0h_K": 9789.149043922196,
-    "rphoto_48p0h_Rsun": 3298.03955439313
+    "luminosity_48p0h_Lsun": 86162217.13356678,
+    "teff_48p0h_K": 9789.1485504,
+    "rphoto_48p0h_Rsun": 3298.0395689233865
   }
 ]
