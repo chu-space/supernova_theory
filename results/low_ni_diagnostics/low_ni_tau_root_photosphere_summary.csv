@@ -1,0 +1,4 @@
+run_id,label,R_star_Rsun,N_tau_roots,local_dRdt_root_times_h,sustained_recession_detected,max_Rph_Rsun,max_Rph_time_h
+wn3_sce_bare_e1_ni001,Bare WN3,0.534063,9,none in 0-48h,no,2994.74,48
+wn3_sce_mass_m0p01_r5_e1_ni001,"$+0.01\,M_\odot$ to $5\,R_\odot$",4.98776,9,18.7702;18.8362;18.9017,no,3015.77,48
+wn3_sce_radius_m0p01_r50_e1_ni001,"$+0.01\,M_\odot$ to $50\,R_\odot$",49.8619,9,25.125,no,3147.94,48

@@ -1,0 +1,4 @@
+run_id,label,R_star_Rsun,post_breakout_start_h,peak_time_h,peak_M_g_snec,peak_M_g_planck,peak_M_g_rayleigh_jeans,median_delta_planck_mag,median_delta_rayleigh_jeans_mag,median_planck_over_snec_nuLnu,median_rayleigh_jeans_over_snec_nuLnu,last_time_hnu_over_kT_lt_0p3_h,first_time_rayleigh_jeans_delta_gt_0p5mag_h
+wn3_sce_bare_e1_ni001,bare_wn3,0.534063,0.0166686,9.05006,-12.4325,-12.4783,-14.4706,-0.0902509,-3.44059,1.08668,23.7814,0.0666998,0.483373
+wn3_sce_mass_m0p01_r5_e1_ni001,m0p01_r5,4.98776,0.0666726,13.0667,-14.6155,-14.6351,-16.0245,-0.0561943,-2.32191,1.05312,8.48719,0.300145,0.0666726
+wn3_sce_radius_m0p01_r50_e1_ni001,m0p01_r50,49.8619,0.550014,17.3834,-15.9072,-15.9084,-16.8758,-0.0179961,-1.37792,1.01671,3.55769,1.13343,0.550014

@@ -1,0 +1,4 @@
+run_id,label,median_ratio,min_ratio,max_ratio
+wn3_sce_bare_e1_ni001,Bare WN3,0.949525,0.748886,1.61033
+wn3_sce_mass_m0p01_r5_e1_ni001,"$+0.01\,M_\odot$ to $5\,R_\odot$",2.53449,0.656741,16.6713
+wn3_sce_radius_m0p01_r50_e1_ni001,"$+0.01\,M_\odot$ to $50\,R_\odot$",1.88974,0.732519,16.1572

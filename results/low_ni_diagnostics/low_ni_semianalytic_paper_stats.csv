@@ -1,0 +1,4 @@
+run_id,label,R_star_Rsun,M_total_Msun,outer_density_n_fit,outer_fit_scatter_dex,R_at_Mext_0p01_Rsun,tau_proxy_at_Mext_0p01,tdiff_proxy_at_Mext_0p01_h,peak_Mg,peak_time_h,peak_nuLnu_g_erg_s,Teff_at_g_peak_K,Rph_at_g_peak_Rsun,cooling_slope_log_nuLnu_vs_log_t
+wn3_sce_bare_e1_ni001,Bare WN3,0.534063,7.7823653,17.8652,0.0884564,0.435495,3.046216e+08,1.935496e+04,-12.4325,9.05006,2.565778e+40,10126.4,1065.87,-1.24804
+wn3_sce_mass_m0p01_r5_e1_ni001,"$+0.01\,M_\odot$ to $5\,R_\odot$",4.98776,7.7923653,1.97899,0.000678843,0.527571,2.360140e+07,6.785618e+04,-14.6155,13.0667,1.916054e+41,13845.8,1864.47,-2.54597
+wn3_sce_radius_m0p01_r50_e1_ni001,"$+0.01\,M_\odot$ to $50\,R_\odot$",49.8619,7.7923653,1.95055,0.00703525,0.527571,1.877767e+06,5.971582e+04,-15.9072,17.3834,6.296435e+41,19108.9,2348.82,-3.05722

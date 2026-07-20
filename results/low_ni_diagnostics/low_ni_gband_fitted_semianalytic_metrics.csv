@@ -1,0 +1,4 @@
+run_id,label,fit_success,fit_rms_mag,fit_mad_mag,log10_L_1h,alpha_L,v_cm_s,color_factor_fT,initial_radius_scale_fR0
+wn3_sce_bare_e1_ni001,bare_wn3,True,0.0441496,0.0361677,41.0362,-0.098797,4.553925e+09,0.724757,31.6228
+wn3_sce_mass_m0p01_r5_e1_ni001,m0p01_r5,True,0.241122,0.184142,42.3677,1.97277,2.561036e+09,2.16551,0.0317033
+wn3_sce_radius_m0p01_r50_e1_ni001,m0p01_r50,True,0.349594,0.191479,43.7864,2.88602,2.810382e+09,3.05031,0.0316228

@@ -1,0 +1,4 @@
+run_id,label,R_star_Rsun,M_ej_Msun,transition_time_s,median_planck_g_to_snec_g,median_ns_g_to_snec_g,median_ns_lbol_to_snec_lphoto,median_ns_radius_proxy_to_snec_rph,median_ns_temperature_to_snec_teff,max_ns_g_to_snec_g
+wn3_sce_bare_e1_ni001,Bare WN3,0.53406262,7.7802916,3.5109197,1.08141,0.919643,0.869399,0.417633,0.958631,1.60915
+wn3_sce_mass_m0p01_r5_e1_ni001,"$+0.01\,M_\odot$ to $5\,R_\odot$",4.9877557,7.7902889,68.575003,1.04944,1.95675,2.19017,0.481093,1.21655,16.6741
+wn3_sce_radius_m0p01_r50_e1_ni001,"$+0.01\,M_\odot$ to $50\,R_\odot$",49.861851,7.7902889,1465.4936,1.01433,1.31104,1.55167,0.382911,1.11612,16.1627

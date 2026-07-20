@@ -1,0 +1,4 @@
+run_id,label,R_star_Rsun,peak_time_h,peak_Teff_K,peak_R_ph_Rsun,peak_M_g,peak_nu_Lnu_g_erg_s
+wn3_sce_bare_e1_ni001,Bare WN3,0.534063,9.05006,10126.4,1065.87,-12.4325,2.565778e+40
+wn3_sce_mass_m0p01_r5_e1_ni001,0.01 Msun to 5 Rsun,4.98776,13.0667,13845.8,1864.47,-14.6155,1.916054e+41
+wn3_sce_radius_m0p01_r50_e1_ni001,0.01 Msun to 50 Rsun,49.8619,17.3834,19108.9,2348.82,-15.9072,6.296435e+41

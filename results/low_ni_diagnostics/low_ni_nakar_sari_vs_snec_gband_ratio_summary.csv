@@ -1,0 +1,4 @@
+run_id,label,R_star_Rsun,M_ej_Msun,transition_time_s,median_ratio,min_ratio,max_ratio
+wn3_sce_bare_e1_ni001,Bare WN3,0.534063,7.78029,3.51092,0.879059,0.284126,2.68931
+wn3_sce_mass_m0p01_r5_e1_ni001,"$+0.01\,M_\odot$ to $5\,R_\odot$",4.98776,7.79029,68.575,1.13342,0.198817,12.5689
+wn3_sce_radius_m0p01_r50_e1_ni001,"$+0.01\,M_\odot$ to $50\,R_\odot$",49.8619,7.79029,1465.49,0.452629,0.16564,8.53942

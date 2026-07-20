@@ -1,0 +1,4 @@
+run_id,label,median_ratio,p16_ratio,p84_ratio,median_delta_mag,fraction_within_10_percent,fraction_within_20_percent,fraction_within_0p1_mag,fraction_within_0p2_mag,bright_phase_start_h,bright_phase_end_h,bright_median_ratio,bright_p16_ratio,bright_p84_ratio,bright_fraction_within_20_percent,bright_median_delta_mag
+wn3_sce_bare_e1_ni001,bare_wn3,1.08668,1.04202,1.34863,-0.0902509,0.599861,0.804099,0.566516,0.804793,0.416751,47.9834,1.08797,1.04276,1.35456,0.802802,-0.0915401
+wn3_sce_mass_m0p01_r5_e1_ni001,m0p01_r5,1.05312,1.0038,1.10492,-0.0561943,0.803894,0.947844,0.780946,0.948192,1.10008,36.9668,1.03642,0.999675,1.07975,1,-0.0388365
+wn3_sce_radius_m0p01_r50_e1_ni001,m0p01_r50,1.01671,0.982536,1.06549,-0.0179961,0.997541,0.998946,0.99719,0.998595,1.8167,41.6667,1.01069,0.982621,1.04666,1,-0.0115441
